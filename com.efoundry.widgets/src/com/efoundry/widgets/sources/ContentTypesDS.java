@@ -36,11 +36,11 @@ import com.efoundry.widgets.I_WidgetSelectSource;
 import com.efoundry.widgets.SelectOptionValue;
 
 /**
- * This class implements a Custom Data source for the <code>{@link CmsCustomSourceSelectWidget}</code>. The class
+ * This class implements a Custom Data source for the <code>{@link CmsDataSourceSelectWidget}</code>. The class
  * retrieves the list of available structured content types. This data source may be configured in the following way:
  * <p>
  *	<code>
- *      &lt;layout element="SomeField" widget="CustomSourceSelectWidget"
+ *      &lt;layout element="SomeField" widget="DataSourceSelectWidget"
  *				configuration="source='com.efoundry.widgets.sources.ContentTypesDS'|exclude='structuredcontent'"/&gt;
  * </code>
  * <p>

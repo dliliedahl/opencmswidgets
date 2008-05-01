@@ -40,7 +40,7 @@ import com.efoundry.widgets.SelectOptionValue;
  * The option configuration string specifies where the data comes from, as shown below:<p>
  * <p>
  * <code>
- *      &lt;layout element="SomeField" widget="CustomSourceSelectWidget"
+ *      &lt;layout element="SomeField" widget="DataSourceSelectWidget"
  *				configuration="source='com.efoundry.widgets.sources.ContentListDS'|
  *              contenttype='ValueList'|
  *              location='/Blogs/BlogCategories'|

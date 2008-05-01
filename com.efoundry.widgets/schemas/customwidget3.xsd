@@ -35,7 +35,7 @@
 					An exclusion list may be provided in the returned list if desired.
 				-->
 				<layout element="Choice" widget="DataSourceSelectWidget"
-             		configuration="source='com.efoundry.widgets.sources.ContentTypesDS'|exclude='rsschanneldef'"/>
+             		configuration="source='com.efoundry.widgets.sources.DatabaseTableDS'|jndiname='jdbc/states'|qry='select state,name from states'"/>
 			</layouts>
 		</xsd:appinfo>
 	</xsd:annotation>  
