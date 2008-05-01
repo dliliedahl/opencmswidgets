@@ -1,0 +1,45 @@
+<!--
+	XSD file to demonstrate a widget
+-->
+<!-- 1. Root Element -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+		
+	<!-- 2. Define the location of the schema location -->
+	<xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd"/>
+	
+	<!-- 3. Root element name and type of our XML type -->
+	<xsd:element name="WidgetDemo2s" type="OpenCmsWidgetDemo2s"/>
+	
+	<!-- 4. Definition of the type described above -->
+	<xsd:complexType name="OpenCmsWidgetDemo2s">
+		<xsd:sequence>
+			<xsd:element name="WidgetDemo2" type="OpenCmsWidgetDemo2" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- 5. Data field definitions -->
+	<xsd:complexType name="OpenCmsWidgetDemo2">
+		<xsd:sequence>
+			<!-- Required Channel Fields -->
+			<xsd:element name="Demo"        type="OpenCmsString"    minOccurs="1" maxOccurs="1" />
+			<xsd:element name="Description" type="OpenCmsString"    minOccurs="1" maxOccurs="1" />
+			<xsd:element name="Choice"	    type="OpenCmsString"    minOccurs="1" maxOccurs="25" />
+		</xsd:sequence>
+		<xsd:attribute name="language" type="OpenCmsLocale" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<layouts>
+				<!-- The choice list is obtained from a field within a structured content type.
+					The custom data source is configured to specify the location and fields within the content
+					that contain the list of values.
+				-->
+				<layout element="Choice" widget="DataSourceSelectWidget"
+					configuration="source='com.efoundry.widgets.sources.ContentFieldListDS'|contenttype='ChoiceList'|location='/Widgets/Seminars'|fieldname='Value'" />
+			</layouts>
+		</xsd:appinfo>
+	</xsd:annotation>  
+
+</xsd:schema>
+

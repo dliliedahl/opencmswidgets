@@ -1,0 +1,21 @@
+<!-- ============================================================
+    XSD content definition file for the ChoiceList type
+ =============================================================== -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xsd:include schemaLocation="opencms://opencms-xmlcontent.xsd" />
+    <xsd:element name="ChoiceLists" type="OpenCmsChoiceLists"/>
+    
+    <xsd:complexType name="OpenCmsChoiceLists">
+        <xsd:sequence>
+            <xsd:element name="ChoiceList" type="OpenCmsChoiceList" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="OpenCmsChoiceList">
+        <xsd:sequence>
+            <xsd:element name="Value" type="OpenCmsString" minOccurs="1" maxOccurs="1000" />
+        </xsd:sequence>
+        <xsd:attribute name="language" type="OpenCmsLocale" use="optional"/>
+    </xsd:complexType>
+</xsd:schema>

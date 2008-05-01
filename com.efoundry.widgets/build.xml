@@ -1,0 +1,133 @@
+<?xml version="1.0" ?> 
+	<!-- ============================================================= -->
+	<project name="com.efoundry.widgets" default="jar" basedir=".">
+ 	
+	<description>Custom Widgets</description> 
+
+	<!-- location of our source files -->
+	<property name="src"			location="src/"/>
+		
+	<!-- where we will put compiled classes into -->
+	<property name="build"			location="bin"/>
+		
+	<!-- distribution files location -->
+	<property name="distdir"		location="dist"/>
+		
+	<!-- module source location -->
+	<property name="module.dir"		location="src-module"/>
+			
+	<!-- name of the source zipfile -->
+	<property name="zipfile"		value="customwidgets-src.zip"/>
+		
+	<!-- name of the jarfile -->
+	<property name="jarname" 		value="com.efoundry.widgets" />
+		
+	<property name="opencms.webapp" location="/Dev/tomcat.5520/webapps/opencms7" />
+		
+	<!-- location of classes in webapp -->
+	<property name="classes.dir" 	location="${opencms.webapp}/classes" />
+		
+	<!-- location of directory with J2EE libraries -->
+	<property name="J2EE.libdir" 	location="/Dev/tomcat.5520/common/lib" />
+
+	<!-- build the classpath by pickup up jars in the webapp dir -->
+	<path id="main.classpath">
+		<!--
+		local project's lib dir
+		<fileset dir="lib" includes="**/*.jar" />
+		-->
+		<fileset dir="${J2EE.libdir}" includes="**/*.jar" />
+		<fileset dir="${opencms.webapp}/WEB-INF/lib" includes="**/*.jar" />
+	</path>
+  	
+	<!--  ==================================================================  --> 
+	<!--  Cleans up                                                           --> 
+	<!--  ==================================================================  --> 
+	<target name = "init">
+		<!--  Create the time stamp   --> 
+		<tstamp />  
+		
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}"/>
+		<mkdir dir="${distdir}"/>
+	</target>
+ 	
+	<!--  ==================================================================  -->
+	<!--  Performs Clean up                                                   -->
+	<!--  ==================================================================  -->
+	<target name= "clean" description = "clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}"/>
+		<delete dir="${distdir}"/>
+	</target>
+
+	<!--  ==================================================================  -->
+	<!--  Zip the source so we can send it to someone                         -->
+	<!--  ==================================================================  --> 
+	<target name="zip-source"  depends="init" description="zip source files">
+		<zip destfile="${distdir}\${zipfile}">
+			<fileset dir="${src}" excludes="CVS, .svn, ${bin}/, ${build}/" />
+			<fileset dir="${basedir}" includes="build.xml" />
+		</zip>
+	</target>
+
+	<!-- ================================================================== -->
+	<!-- Compile Java sources                                               -->
+	<!-- ================================================================== -->
+	<target name="build" depends="init"  description="compile the source" >
+
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" destdir="${build}"
+			excludes="CVS,.svn"
+         debug="on"
+         optimize="on"
+         deprecation="off">
+			<classpath refid="main.classpath"/>
+		</javac>
+	</target>
+		
+	<!-- ================================================================== -->
+	<!-- Build the Jar files                                                -->
+	<!-- ================================================================== -->
+   <target name="jar" depends="build" description="Generate the .jar files">
+       <mkdir dir="${distdir}" />
+	   	
+       <jar jarfile="${distdir}/${jarname}.jar"  
+      		basedir="${build}" 
+      		includes="com/**" >
+       </jar>
+   </target>
+		
+	<!-- ================================================================== -->
+	<!-- Copy Jar/class files to appserver directory                        -->
+	<!-- ================================================================== -->
+	<target name="deploy" depends="jar" description="Copy updated jar files to AppServer directory">
+
+		<!-- copy all built class files to the webapp -->
+		<echo message="copying ${jarname}.jar to: ${opencms.webapp}/WEB-INF/lib"/>
+		<copy todir="${opencms.webapp}/WEB-INF/lib" verbose="true">
+			<fileset dir="${distdir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+
+		<!-- also copy the project .jars to the module folder -->
+		<echo message="copying ${jarname}.jar to: ${module.dir}/lib"/>
+		<copy todir="${module.dir}/lib" verbose="true">
+			<fileset dir="${distdir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	</target>     
+
+	<target name="update-module" depends="deploy" description="update module directory with built files">
+		<!-- copy all built jars to the module lib folder -->
+		<echo message="copying ${jarname}.jar to: src-module/lib"/>
+		<copy todir="src-module/lib" verbose="true">
+			<fileset dir="${distdir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+  </project>
