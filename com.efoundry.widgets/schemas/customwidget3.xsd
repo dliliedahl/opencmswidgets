@@ -20,7 +20,6 @@
 	<!-- 5. Data field definitions -->
 	<xsd:complexType name="OpenCmsWidgetDemo3">
 		<xsd:sequence>
-			<!-- Required Channel Fields -->
 			<xsd:element name="Demo"        type="OpenCmsString"    minOccurs="1" maxOccurs="1" />
 			<xsd:element name="Description" type="OpenCmsString"    minOccurs="1" maxOccurs="1" />
 			<xsd:element name="Choice"	    type="OpenCmsString"    minOccurs="1" maxOccurs="25" />
